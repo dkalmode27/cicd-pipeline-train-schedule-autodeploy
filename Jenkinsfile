@@ -17,7 +17,7 @@ pipeline {
         
        stage('Check branch name') {
             steps {
-                echo env.BRANCH_NAME
+                echo branch
             }
         }
             
