@@ -21,10 +21,6 @@ pipeline {
             }
         }
             
-        steps {
-          echo 'run this stage - when branch is not equal to master'
-          }
-         }
         stage('Build Docker Image') {
             when {
                 branch 'master'
