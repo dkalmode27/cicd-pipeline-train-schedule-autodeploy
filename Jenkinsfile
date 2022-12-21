@@ -17,6 +17,9 @@ pipeline {
         stage('Build Docker Image') {
             when {
                 branch 'master'
+                expression {
+                  return env.BRANCH_NAME != 'master'
+                }
             }
             steps {
                 script {
