@@ -14,12 +14,13 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
-        stage('expression-branch') {
-           when {
-              expression {
-                 return env.BRANCH_NAME != 'master'
-          }
+        
+       stage('Check branch name') {
+            steps {
+                sh 'printenv' env.BRANCH_NAME
+            }
         }
+            
         steps {
           echo 'run this stage - when branch is not equal to master'
           }
