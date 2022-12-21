@@ -11,6 +11,7 @@ pipeline {
             steps {
                 echo 'Running build automation'
                 sh './gradlew build --no-daemon'
+                sh 'echo Branch Name: $BRANCH_NAME'
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
