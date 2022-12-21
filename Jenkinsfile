@@ -17,7 +17,7 @@ pipeline {
         
        stage('Check branch name') {
             steps {
-                sh 'printenv' env.BRANCH_NAME
+                echo env.BRANCH_NAME
             }
         }
             
