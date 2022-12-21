@@ -14,13 +14,7 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
-        
-       stage('Check branch name') {
-            steps {
-                echo branch
-            }
-        }
-            
+         
         stage('Build Docker Image') {
             when {
                 branch 'master'
@@ -34,6 +28,7 @@ pipeline {
                 }
             }
         }
+        
         stage('Push Docker Image') {
             when {
                 branch 'master'
@@ -47,6 +42,7 @@ pipeline {
                 }
             }
         }
+        
         stage('CanaryDeploy') {
             when {
                 branch 'master'
@@ -62,6 +58,7 @@ pipeline {
                 )
             }
         }
+        
         stage('DeployToProduction') {
             when {
                 branch 'master'
