@@ -1,11 +1,11 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: npm-service-canary
+  name: train-schedule-service-canary
 spec:
   type: NodePort
   selector:
-    app: npm-service-schedule
+    app: train-schedule
     track: canary
   ports:
   - protocol: TCP
@@ -17,23 +17,23 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: npm-deployment-canary
+  name: train-schedule-deployment-canary
   labels:
-    app: npm-service-schedule
+    app: train-schedule
 spec:
   replicas: $CANARY_REPLICAS
   selector:
     matchLabels:
-      app: npm-service-schedule
+      app: train-schedule
       track: canary
   template:
     metadata:
       labels:
-        app: npm-service-schedule
+        app: train-schedule
         track: canary
     spec:
       containers:
-      - name: npm-service-schedule
+      - name: train-schedule
         image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
         ports:
         - containerPort: 8080
