@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools{
+        jdk 'Java8'
+    }
     environment {
         DOCKER_IMAGE_NAME = "dkalmode27/npmwebsite"
     }
