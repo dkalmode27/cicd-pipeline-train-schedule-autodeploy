@@ -14,6 +14,16 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
+        stage('expression-branch') {
+           when {
+              expression {
+                 return env.BRANCH_NAME != 'master'
+          }
+        }
+        steps {
+          echo 'run this stage - when branch is not equal to master'
+          }
+         }
         stage('Build Docker Image') {
             when {
                 branch 'master'
