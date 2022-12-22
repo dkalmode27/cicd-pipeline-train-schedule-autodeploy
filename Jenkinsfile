@@ -65,6 +65,8 @@ pipeline {
             }
             
             steps {
+                sh 'kubectl create -f train-schedule-kube-canary.yml'
+                
                 kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
                     configs: 'train-schedule-kube-canary.yml',
