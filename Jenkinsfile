@@ -1,17 +1,23 @@
+def AGENT_LABEL_MASTER = "Built-In-Node"
+def AGENT_LABEL_SLAVE = "Jenkins-slave1"
+
 pipeline {
-    agent any
+    
+    label "${AGENT_LABEL_SLAVE}"
+    
     tools{
         jdk 'Java8'
     }
+    
     environment {
         DOCKER_IMAGE_NAME = "dkalmode27/npmwebsite"
     }
+    
     stages {
         stage('Build') {
             steps {
                 echo 'Running build automation'
                 sh './gradlew build --no-daemon'
-                sh 'echo Branch Name: $BRANCH_NAME'
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
@@ -45,12 +51,19 @@ pipeline {
         }
         
         stage('CanaryDeploy') {
+            
+            agent { 
+               label "${AGENT_LABEL_MASTER}" 
+            }
+            
             when {
                 branch 'master'
             }
+            
             environment { 
                 CANARY_REPLICAS = 1
             }
+            
             steps {
                 kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
@@ -61,12 +74,19 @@ pipeline {
         }
         
         stage('DeployToProduction') {
+            
+            agent { 
+               label "${AGENT_LABEL_MASTER}" 
+            }
+            
             when {
                 branch 'master'
             }
+            
             environment { 
                 CANARY_REPLICAS = 0
             }
+            
             steps {
                 input 'Deploy to Production?'
                 milestone(1)
