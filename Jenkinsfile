@@ -78,7 +78,7 @@ pipeline {
             steps {
                 input 'Deploy to Production?'
                 milestone(1)
-                sh 'kubeclt create -f train-schedule-kube.yml'
+                sh 'kubectl create -f train-schedule-kube.yml'
             }
         }
     }
