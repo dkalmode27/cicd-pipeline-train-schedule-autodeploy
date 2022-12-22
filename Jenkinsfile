@@ -50,7 +50,37 @@ pipeline {
             }
         }
         
-        stage('CanaryDeploy') {
+        stage('Remove old canary deployment') {
+            
+            agent { 
+               label "${AGENT_LABEL_MASTER}" 
+            }
+            
+            when {
+                branch 'master'
+            }
+                        
+            steps {
+                sh 'kubectl delete deploy train-schedule-deployment-canary'
+            }
+        }
+        
+        stage('Remove old canary service') {
+            
+            agent { 
+               label "${AGENT_LABEL_MASTER}" 
+            }
+            
+            when {
+                branch 'master'
+            }
+                        
+            steps {
+                sh 'kubectl delete svc train-schedule-service-canary'
+            }
+        }
+        
+        stage('Create new canary deployment and service') {
             
             agent { 
                label "${AGENT_LABEL_MASTER}" 
