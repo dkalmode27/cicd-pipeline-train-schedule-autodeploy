@@ -2,9 +2,9 @@ def AGENT_LABEL_MASTER = "Built-In-Node"
 def AGENT_LABEL_SLAVE = "Jenkins-slave1"
 
 pipeline {
-    
-    label "${AGENT_LABEL_SLAVE}"
-    
+    agent {
+       label "${AGENT_LABEL_SLAVE}"
+    }
     tools{
         jdk 'Java8'
     }
